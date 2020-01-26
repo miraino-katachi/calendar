@@ -7,14 +7,14 @@ html, body {
 }
 
 .container {
-    width: 512px;
+    max-width: 512px;
     margin: 0 auto 0 auto;
-    text-align: left;
 }
 
 table {
     border-spacing: 0;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
 caption {
@@ -38,11 +38,12 @@ td {
 }
 
 .navi {
+    margin: 10px auto;
+    /* display: flex; */
     text-align: center;
 }
 
-ul li {
-    list-style: none;
-    float: left;
-    margin: 10px 20px;
+.navi p {
+    display: inline-block;
+    margin: 10px 5px;
 }

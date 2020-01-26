@@ -47,6 +47,7 @@ $date = 1;
 
 <body>
     <div class="container">
+
         <h1>カレンダー</h1>
 
         <table>
@@ -83,15 +84,11 @@ $date = 1;
                 </tr>
             <?php endfor ?>
         </table>
-
         <div class="navi">
-            <ul>
-                <li><a href="./?month=<?= $month - 1 ?>">&lt;&lt;前の月</a></li>
-                <li><a href="./">今月</a></li>
-                <li><a href="./?month=<?= $month + 1 ?>">次の月&gt;&gt;</a></li>
-            </ul>
+            <p><a href="./?month=<?= $month - 1 ?>">&lt;&lt;前の月</a></p>
+            <p><a href="./">今月</a></p>
+            <p><a href="./?month=<?= $month + 1 ?>">次の月&gt;&gt;</a></p>
         </div>
-
     </div>
 </body>
 
