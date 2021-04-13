@@ -5,9 +5,8 @@ $month = 0;
 // GETパラメータがあって、かつ、数値形式で、かつ、整数のとき。
 // isset()は、変数が存在していて、そして NULLとは異なるときにtrueを返却します。
 // is_numeric()関数は、引数が「数値文字列」の場合にtrueを返却します。
-// is_int()関数は、引数が「数値文字列」の場合はfalseを返却しますので、integerにキャストしています。
 // HTMLのFORMからPOSTまたはGETで送信された値やgetパラメータ（クエリストリング、クエリパラメータ）で受け取った「数値」は「文字列」になっています。
-if (isset($_GET['month']) && is_numeric($_GET['month']) && is_int((int) $_GET['month'])) {
+if (isset($_GET['month']) && is_numeric($_GET['month'])) {
     $month = (int) $_GET['month'];
 }
 
@@ -43,7 +42,7 @@ $monthDays = $dateTime->format('t');
 // 当月に何週あるかを求めます。小数点以下を切り上げることで、同月の週数が求められます。
 $weeks = ceil(($monthDays + $beginDayOfWeek) / 7);
 
-// カレンダに記述する日付のカウンタ。
+// カレンダーに記述する日付のカウンタ。
 $date = 1;
 ?>
 <!DOCTYPE html>
@@ -53,55 +52,76 @@ $date = 1;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>カレンダー</title>
-    <link rel="stylesheet" href="./css/normalize.css">
-    <link rel="stylesheet" href="./css/main.css">
+    <title>練習問題07-5</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        th {
+            text-align: center;
+        }
+        td {
+            text-align: right;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-
-        <h1>カレンダー</h1>
-
-        <table>
-            <caption><?= $dateTime->format('Y年n月') ?></caption>
-            <tr>
-                <th>日</th>
-                <th>月</th>
-                <th>火</th>
-                <th>水</th>
-                <th>木</th>
-                <th>金</th>
-                <th>土</th>
-            </tr>
-            <!-- 当月にある週数分繰り返し -->
-            <?php for ($week = 0; $week < $weeks; $week++) : ?>
-                <tr>
-                    <!-- 一週間の日数分（7日分）繰り返し -->
-                    <?php for ($day = 0; $day < 7; $day++) : ?>
-                        <td>
-                            <?php
-                            if ($week == 0 && $day >= $beginDayOfWeek) {
-                                // 月の1週目で、かつ、月初の日（曜日）以上のときは、
-                                // 日付のカウンタを表示して、1を足す
-                                echo $date++;
-                            } elseif ($week > 0 && $date <= $monthDays) {
-                                // 月の2週目以降で、かつ、月末の日までのときは、
-                                // 日付のカウンタを表示して、1を足す
-                                echo $date++;
-                            }
-                            // その他の日は何も表示しない
-                            ?>
-                        </td>
-                    <?php endfor ?>
-                </tr>
-            <?php endfor ?>
-        </table>
-        <div class="navi">
-            <p><a href="./?month=<?= $month - 1 ?>">&lt;&lt;前の月</a></p>
-            <p><a href="./">今月</a></p>
-            <p><a href="./?month=<?= $month + 1 ?>">次の月&gt;&gt;</a></p>
+        <div class="container">
+            <div class="row my-3">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <?= $dateTime->format('Y年n月') ?>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>日</th>
+                                    <th>月</th>
+                                    <th>火</th>
+                                    <th>水</th>
+                                    <th>木</th>
+                                    <th>金</th>
+                                    <th>土</th>
+                                </tr>
+                                <!-- 当月にある週数分繰り返し -->
+                                <?php for ($week = 0; $week < $weeks; $week++) : ?>
+                                    <tr>
+                                        <!-- 一週間の日数分（7日分）繰り返し -->
+                                        <?php for ($day = 0; $day < 7; $day++) : ?>
+                                            <td>
+                                                <?php
+                                                if ($week == 0 && $day >= $beginDayOfWeek) {
+                                                    // 月の1週目で、かつ、月初の日（曜日）以上のときは、
+                                                    // 日付のカウンタを表示して、1を足す
+                                                    echo $date++;
+                                                } elseif ($week > 0 && $date <= $monthDays) {
+                                                    // 月の2週目以降で、かつ、月末の日までのときは、
+                                                    // 日付のカウンタを表示して、1を足す
+                                                    echo $date++;
+                                                }
+                                                // その他の日は何も表示しない
+                                                ?>
+                                            </td>
+                                        <?php endfor ?>
+                                    </tr>
+                                <?php endfor ?>
+                            </table>
+                        </div>
+                        <div class="card-footer" style="text-align: center;">
+                            <a href="./?month=<?= $month - 1 ?>" class="btn btn-outline-primary">&lt;&lt;前の月</a>
+                            <a href="./" class="btn btn-primary">今月</a>
+                            <a href="./?month=<?= $month + 1 ?>" class="btn btn-outline-primary">次の月&gt;&gt;</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
         </div>
+
+
+
     </div>
 </body>
 
